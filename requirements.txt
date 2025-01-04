@@ -1,7 +1,3 @@
-os
 kagglehub==0.3.4
 pandas==2.2.3
 nbformat==5.10.4
-re
-pkg_resources
-argparse
