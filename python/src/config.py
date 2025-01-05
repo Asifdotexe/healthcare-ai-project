@@ -7,4 +7,3 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = PROJECT_ROOT / 'data'
 NOTEBOOKS_DIR = PROJECT_ROOT / 'python/notebook'
 SRC_DIR = PROJECT_ROOT / 'python/src'
-print(SRC_DIR)
