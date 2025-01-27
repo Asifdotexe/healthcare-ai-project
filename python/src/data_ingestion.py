@@ -3,7 +3,9 @@ import kagglehub
 import pandas as pd
 import logging
 
-from src.config import PROJECT_ROOT, DATA_DIR, KAGGLE_SOURCE_PATH, KAGGLE_DATA_NAME
+
+from src.config import (PROJECT_ROOT, DATA_DIR, KAGGLE_SOURCE_PATH,
+                        KAGGLE_DATA_NAME)
 
 def ingest_data():
     """Ingests the data from kaggle using kagglehub"""
