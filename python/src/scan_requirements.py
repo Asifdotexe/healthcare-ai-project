@@ -41,9 +41,11 @@ def scan_dependencies_in_directory(directory_path: str) -> dict:
     for root_directory, _, file_names in os.walk(directory_path):
         for file_name in file_names:
             if file_name.endswith(".py"):
-                with open(os.path.join(root_directory, file_name), "r", encoding="utf-8") as python_file:
-                    python_file_content = python_file.read()
-                    import_statements = re.findall(r"^\s*(import|from) ([\w\.]+)", python_file_content, re.MULTILINE)
+                with open(os.path.join(root_directory, file_name), "r",
+                          encoding="utf-8") as python_file:
+                    python_file_content: str = python_file.read()
+                    import_statements = re.findall(r"^\s*(import|from) ([\w\.]+)",
+                                                   python_file_content, re.MULTILINE)
                     for import_statement in import_statements:
                         package_name = import_statement[1].split('.')[0]  # Get top-level package
                         if package_name not in dependencies:
@@ -52,11 +54,14 @@ def scan_dependencies_in_directory(directory_path: str) -> dict:
 
             # Scan Jupyter notebooks
             elif file_name.endswith(".ipynb"):
-                with open(os.path.join(root_directory, file_name), "r", encoding="utf-8") as notebook_file:
+                with open(os.path.join(root_directory, file_name), "r",
+                          encoding="utf-8") as notebook_file:
                     notebook = nbformat.read(notebook_file, as_version=4)
                     for cell in notebook.cells:
                         if cell.cell_type == "code":
-                            import_statements = re.findall(r"^\s*(import|from) ([\w\.]+)", cell.source, re.MULTILINE)
+                            import_statements = re.findall(
+                                r"^\s*(import|from) ([\w\.]+)",
+                                cell.source, re.MULTILINE)
                             for import_statement in import_statements:
                                 package_name = import_statement[1].split('.')[0]
                                 if package_name not in dependencies:
@@ -66,7 +71,9 @@ def scan_dependencies_in_directory(directory_path: str) -> dict:
     return dependencies
 
 
-def create_requirements_file(dependencies: dict, output_file: str = "requirements.txt") -> None:
+def create_requirements_file(
+        dependencies: dict,
+        output_file: str = "requirements.txt") -> None:
     """
     Create a `requirements.txt` file with the list of dependencies and their versions.
 
@@ -106,9 +113,15 @@ def main() -> None:
         python scan_requirements.py /path/to/project --output custom_requirements.txt
     """
     # Set up argparse for command-line arguments
-    parser = argparse.ArgumentParser(description="Scan project for dependencies and create a requirements.txt file.")
-    parser.add_argument("directory_path", help="Directory to scan for dependencies (Python files and Jupyter notebooks).")
-    parser.add_argument("-o", "--output", help="Output file for the requirements (default: requirements.txt).", default="requirements.txt")
+    parser = argparse.ArgumentParser(
+        description="Scan project for dependencies and create a requirements.txt file.")
+    parser.add_argument(
+        "directory_path",
+        help="Directory to scan for dependencies (Python files and Jupyter notebooks).")
+    parser.add_argument(
+        "-o", "--output",
+        help="Output file for the requirements (default: requirements.txt).",
+        default="requirements.txt")
     
     args = parser.parse_args()
 
